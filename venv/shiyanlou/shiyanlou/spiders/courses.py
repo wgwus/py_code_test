@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 import scrapy
-from shiyanlou.items import ShiyanlouItem
+from ..items import CourseItem
 
 class CoursesSpider(scrapy.Spider):
     name = 'courses'
@@ -15,7 +15,8 @@ class CoursesSpider(scrapy.Spider):
 
     def parse(self, response):
         for course in response.css('div.col-md-3'):
-            item = ShiyanlouItem({
+
+            item = CourseItem({
                 'name': course.css('h6::text').extract_first().strip(),
                 'description': course.css('div.course-description::text').extract_first().strip(),
                 'type': course.css('span.course-type::text').extract_first(default='Free').strip(),
